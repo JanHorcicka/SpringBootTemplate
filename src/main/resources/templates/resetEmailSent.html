@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reset email sent</title>
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Cabin:400,500,600,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/util.css}">
+</head>
+<body>
+<div class="headr" th:insert="~{/modules/header}"></div>
+<!-- //header -->
+<div class="container">
+    <section class="py-lg-4 py-md-3 py-sm-3 py-3">
+        <p>
+            If the provided email address exists, we sent an email with instructions to it.<br>
+            Follow the instruction in the email to reset your password.<br>
+            You can close this window.
+        </p>
+    </section>
+</div>
+
+<div class="bottom-footer" th:insert="~{/modules/footer.html}"></div>
+</body>
+</html>

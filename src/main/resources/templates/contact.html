@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <title>Calculation</title>
+    <!--meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Stock evaluator, undervalued stocks, Warren Buffet's formula, number one stocks, the best stocks, number one shares, the best shares"
+    />
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Cabin:400,500,600,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" type="text/css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/util.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/loginForm.css}">
+</head>
+
+<body>
+
+<div class="headr" th:insert="~{/modules/header}"></div>
+<!-- image -->
+<div class="headr-image d-lg-flex justify-content-center align-items-center py-3 px-sm-3 page-name">
+    <div>
+        <h5>CONTACT US</h5>
+    </div>
+</div>
+<!-- //image -->
+<section class="py-lg-4 py-md-3 py-sm-3 py-3">
+    <div class="container py-lg-5 py-md-5 py-sm-4 py-3">
+        <div class="row flex justify-content-center">
+            <div class="col-lg-8 col-md-8">
+                <div class="website-message" th:if="${message}" th:text="${message}">Message sent</div>
+                <form method="post" action="#" th:action="@{/contactForm}" th:object="${contactForm}">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 form-group contact-forms">
+                            <input type="text" class="form-control" th:field="*{firstName}" name="firstName" placeholder="First Name" required="">
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 form-group contact-forms">
+                            <input type="text" class="form-control" th:field="*{lastName}" name="lastName" placeholder="Last Name" required="">
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 form-group contact-forms">
+                            <input type="email" class="form-control" th:field="*{email}" name="email" placeholder="Email" required="">
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 form-group contact-forms">
+                            <input type="text" class="form-control" th:field="*{phone}" name="phone" placeholder="Phone (Optional)">
+                        </div>
+                    </div>
+                    <div class="form-group contact-forms">
+                        <textarea class="form-control" placeholder="Message" th:field="*{body}" name="body" required=""></textarea>
+                    </div>
+                    <button type="submit" class="login100-form-btn">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="content" th:insert="~{/modules/footer.html}"></div>
+
+</body>
+
+</html>

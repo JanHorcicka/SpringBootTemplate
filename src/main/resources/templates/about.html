@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <title>About us</title>
+    <!--meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="">
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Cabin:400,500,600,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/util.css}">
+</head>
+<body>
+<div class="main-top" id="home">
+    <!-- header -->
+    <div class="headr" th:insert="~{/modules/header}"></div>
+    <!-- //header -->
+    <!-- image -->
+    <div class="headr-image d-lg-flex justify-content-center align-items-center py-3 px-sm-3 page-name">
+        <div>
+            <h5>ABOUT US</h5>
+        </div>
+    </div>
+    <!-- //image -->
+    <div class="container">
+        <section class="py-lg-4 py-md-3 py-sm-3 py-3">
+            <div class="my-container">
+                <div class="h2">About us</div>
+                <p class="mb-2 lh-1-8">
+                    About us
+                </p>
+            </div>
+        </section>
+    </div>
+</div>
+<div class="bottom-footer" th:insert="~{/modules/footer.html}"></div>
+</body>
+</html>
