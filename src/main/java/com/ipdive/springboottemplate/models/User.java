@@ -4,9 +4,10 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
-import java.time.LocalDate;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
-@DynamoDBTable(tableName="Users")
+@DynamoDBTable(tableName = "Users")
 public class User {
 
     private String username;
@@ -27,8 +28,8 @@ public class User {
         this.isEnabled = false;
         this.authorities = "USER";
         this.isPremium = false;
-        this.premiumExpiryDateEpoch = LocalDate.now().plusMonths(1).toEpochDay();
-        this.dateCreatedEpoch = LocalDate.now().toEpochDay();
+        this.premiumExpiryDateEpoch = Instant.now().plus(30, ChronoUnit.DAYS).getEpochSecond();
+        this.dateCreatedEpoch = Instant.now().getEpochSecond();
     }
 
     public User(String username, String password, boolean isEnabled, String authorities, boolean isPremium, long premiumExpiryDateEpoch, long dateCreatedEpoch) {

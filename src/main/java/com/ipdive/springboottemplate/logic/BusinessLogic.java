@@ -1,5 +1,6 @@
 package com.ipdive.springboottemplate.logic;
 
+import com.ipdive.springboottemplate.SpringBootTemplateApplication;
 import com.ipdive.springboottemplate.controller.MyErrorController;
 import com.ipdive.springboottemplate.dao.company.CompanyDao;
 import com.ipdive.springboottemplate.dao.passwordResetToken.PasswordResetTokenDao;
@@ -17,9 +18,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -48,7 +48,7 @@ public class BusinessLogic {
         this.passwordEncoder = passwordEncoder;
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(BusinessLogic.class);
+    private static final Logger logger = LoggerFactory.getLogger(SpringBootTemplateApplication.class);
 
     public boolean createNewUser(User user) throws UserException {
         user.setAuthorities("USER");
@@ -62,6 +62,7 @@ public class BusinessLogic {
         if (existingUser != null) throw new UserAlreadyExistsException(user);
         if (user.getUsername().contains("TEST")) user.setEnabled(true);
         setUserPassword(user, user.getPassword());
+        user.setDateCreatedEpoch(Instant.now().getEpochSecond());
         userDao.save(user);
         boolean success = SpringEmailSender.sendAccountValidationEmail(user);
         if (success) logger.info(String.format("User %s was created.", user.getUsername()));
@@ -69,14 +70,11 @@ public class BusinessLogic {
     }
 
     public User getUserByEmail(String email) {
-        System.out.println("Getting user by email");
         return userDao.getUserByUsername(email);
     }
 
     public boolean initiatePasswordReset(User user) {
-        System.out.println("Start password reset");
         PasswordResetToken token = new PasswordResetToken(user);
-        System.out.println("Token is " + token);
         savePasswordResetToken(token);
         boolean sendEmailSuccess = SpringEmailSender.sendPasswordResetEmail(token);
         return sendEmailSuccess;
@@ -90,9 +88,10 @@ public class BusinessLogic {
         PasswordResetToken passwordResetToken = null;
         try {
             passwordResetToken = passwordResetTokenDao.getPasswordResetToken(tokenId);
-            long timeNow = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
+            long timeNow = Instant.now().getEpochSecond();
             if (timeNow > passwordResetToken.getExpirationDateEpoch()) passwordResetToken.setExpired(true);
-        } catch (PasswordResetTokenNotFoundException e) {
+        }
+        catch (PasswordResetTokenNotFoundException e) {
             e.printStackTrace();
         }
         return passwordResetToken;
@@ -124,7 +123,8 @@ public class BusinessLogic {
         boolean success = true;
         try {
             userDao.save(user);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             success = false;
         }
         return success;
@@ -132,7 +132,7 @@ public class BusinessLogic {
 
     public void deleteExpiredUsers() {
         List<User> users = userDao.getAllUsers();
-        long expireDate = LocalDate.now().minusDays(1).toEpochDay();
+        long expireDate = Instant.now().minus(1, ChronoUnit.DAYS).getEpochSecond();
         for (User user : users) {
             if (!user.isEnabled() && user.getDateCreatedEpoch() < expireDate) {
                 userDao.delete(user);
@@ -142,7 +142,7 @@ public class BusinessLogic {
 
     public void deleteExpiredPasswordResetTokens() {
         List<PasswordResetToken> tokens = passwordResetTokenDao.getAll();
-        long dateNow = LocalDate.now().toEpochDay();
+        long dateNow = Instant.now().getEpochSecond();
         for (PasswordResetToken passwordResetToken : tokens) {
             if (passwordResetToken.getExpirationDateEpoch() < dateNow) {
                 passwordResetTokenDao.deletePasswordResetToken(passwordResetToken);

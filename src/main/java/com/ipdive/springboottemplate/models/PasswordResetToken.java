@@ -5,16 +5,15 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 import javax.persistence.Transient;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
 @DynamoDBTable(tableName="PasswordResetTokens")
 public class PasswordResetToken {
 
     @Transient
-    private final int EXPIRATION = 60; // in minutes
+    private final int TTL_DAYS = 1; // in days
 
     @Transient
     private boolean isExpired = false;
@@ -29,23 +28,13 @@ public class PasswordResetToken {
     public PasswordResetToken(User user) {
         this.id = UUID.randomUUID().toString();
         this.user = user.getUsername();
-        this.expirationDateEpoch = LocalDate.now().plusDays(1).toEpochDay();
+        this.expirationDateEpoch = Instant.now().plus(TTL_DAYS, ChronoUnit.DAYS).getEpochSecond();
     }
 
     public PasswordResetToken(String id, String username) {
         this.id = id;
         this.user = username;
-        LocalDateTime timeNow = LocalDateTime.now();
-        timeNow.plusMinutes(EXPIRATION);
-        this.expirationDateEpoch = timeNow.toEpochSecond(ZoneOffset.UTC);
-    }
-
-    public PasswordResetToken(String id, String user, int expirationInMinutes) {
-        this.id = id;
-        this.user = user;
-        LocalDateTime timeNow = LocalDateTime.now();
-        timeNow.plusMinutes(expirationInMinutes);
-        this.expirationDateEpoch = timeNow.toEpochSecond(ZoneOffset.UTC);
+        this.expirationDateEpoch = Instant.now().plus(TTL_DAYS, ChronoUnit.DAYS).getEpochSecond();
     }
 
     @DynamoDBHashKey

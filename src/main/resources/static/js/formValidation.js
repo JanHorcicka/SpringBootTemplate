@@ -44,7 +44,7 @@
 
     function validatePassword() {
         const passwords = $('input:password');
-        if (passwords.length > 0) {
+        if (passwords.length > 1) {
             if ($(passwords[0]).val() !== $(passwords[1]).val()) {
                 $('#passwords-dont-match-error-message').show();
                 passwords.val('');

@@ -1,5 +1,6 @@
 package com.ipdive.springboottemplate.logic;
 
+import com.ipdive.springboottemplate.SpringBootTemplateApplication;
 import com.ipdive.springboottemplate.controller.MyErrorController;
 import com.ipdive.springboottemplate.models.ContactForm;
 import com.ipdive.springboottemplate.models.PasswordResetToken;
@@ -18,7 +19,7 @@ import java.util.Properties;
 
 public class SpringEmailSender {
 
-    private static final Logger logger = LoggerFactory.getLogger(MyErrorController.class);
+    private static final Logger logger = LoggerFactory.getLogger(SpringBootTemplateApplication.class);
 
     private static JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();

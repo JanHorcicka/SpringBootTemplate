@@ -10,7 +10,7 @@ public class ScheduledTasks {
     @Autowired
     BusinessLogic businessLogic;
 
-    @Scheduled(fixedDelay = 1000*60*60*24, initialDelay= 1000*60*1)
+    @Scheduled(cron = "0 0 3 * * ?")
     public void scheduleUpdateTask() {
         System.out.println("This is a scheduled task");
         businessLogic.deleteExpiredUsers();

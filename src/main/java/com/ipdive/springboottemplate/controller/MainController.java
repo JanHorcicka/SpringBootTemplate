@@ -11,7 +11,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,11 +61,9 @@ public class MainController {
             businessLogic.createNewUser(user);
             message = "Your account has been created. Follow the instructions we sent to your email address " +
                     "to validate your account.";
-        }
-        catch (UserAlreadyExistsException uaee) {
+        } catch (UserAlreadyExistsException uaee) {
             message = uaee.getMessage();
-        }
-        catch (UserException ue) {
+        } catch (UserException ue) {
             message = "There was a problem creating your account. Please contact us using the contact form";
         }
         model.addAttribute("message", message);
@@ -179,7 +176,7 @@ public class MainController {
             message = "The message was sent successfully.";
         } else {
             message = "There was a problem sending the message. " +
-                    "Please try again or send email to our email address in the footer";
+                    "Please try again or send email to our email address in the footer.";
         }
         model.addAttribute("message", message);
         return "contact";

@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class BusinessLogicTest {
 
-    private String WORKING_USERNAME = "numberoneshares@gmail.com";
+    private String WORKING_USERNAME = "admin";
     private String NEW_PASSWORD = "Password1";
 
     @Autowired
