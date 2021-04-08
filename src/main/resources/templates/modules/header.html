@@ -21,6 +21,9 @@
                 <li>
                     <a href="/about">About</a>
                 </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a href="/user/account">Account</a>
+                </li>
                 <li>
                     <a sec:authorize="isAnonymous()" href="/login">Login</a>
                     <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
 @Controller
 public class MainController {
 
@@ -141,16 +140,11 @@ public class MainController {
     }
 
     @PostMapping("/setNewPassword")
-    public String handlePasswordReset(@RequestParam String password,
-                                      @RequestParam String repeatPassword,
+    public String handlePasswordReset(@RequestParam String newPassword,
                                       @RequestParam String token,
                                       Model model) {
-        if (!password.equals(repeatPassword)) {
-            model.addAttribute("error", "Passwords don't match");
-            return "resetPassword";
-        }
         PasswordResetToken passwordResetToken = businessLogic.getPasswordResetTokenById(token);
-        businessLogic.updateUserPassword(passwordResetToken, password);
+        businessLogic.updateUserPassword(passwordResetToken, newPassword);
         model.addAttribute("message", "Password changed successfully.");
         return "login";
     }

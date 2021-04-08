@@ -45,7 +45,7 @@
     function validatePassword() {
         const passwords = $('input:password');
         if (passwords.length > 1) {
-            if ($(passwords[0]).val() !== $(passwords[1]).val()) {
+            if ($("input[name='newPassword']").val() !== $("input[name='repeatPassword']").val()) {
                 $('#passwords-dont-match-error-message').show();
                 passwords.val('');
                 return false;

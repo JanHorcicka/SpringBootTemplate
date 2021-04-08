@@ -13,6 +13,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.SendFailedException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
@@ -71,11 +72,18 @@ public class SpringEmailSender {
             mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
             javaMailSender.send(mimeMessage);
 
-        } catch (MessagingException me) {
+        }
+        catch (SendFailedException sendFailedException) {
+                sendFailedException.printStackTrace();
+                logger.error(String.format("Send failed exception for email %s : %s", to, sendFailedException.getMessage()));
+                return false;
+        }
+        catch (MessagingException me) {
             me.printStackTrace();
             logger.error(String.format("MessagingException for user %s : %s", to, me.getMessage()));
             return false;
-        } catch (MailAuthenticationException mae) {
+        }
+        catch (MailAuthenticationException mae) {
             mae.printStackTrace();
             logger.error(String.format("MailAuthenticationException for user %s : %s", to, mae.getMessage()));
             return false;

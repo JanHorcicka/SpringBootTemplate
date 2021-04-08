@@ -55,8 +55,8 @@ public class BusinessLogic {
         User existingUser = null;
         try {
             existingUser = userDao.getUserByUsername(user.getUsername());
-        }
-        catch (UsernameNotFoundException e) {
+            logger.info(String.format("User %s already exist.", user.getUsername()));
+        } catch (UsernameNotFoundException e) {
             logger.info(String.format("Creating new user: %s", user.getUsername()));
         }
         if (existingUser != null) throw new UserAlreadyExistsException(user);
@@ -148,5 +148,22 @@ public class BusinessLogic {
                 passwordResetTokenDao.deletePasswordResetToken(passwordResetToken);
             }
         }
+    }
+
+    public UserInfo getInfoForUsername(String username) {
+        User user = userDao.getUserByUsername(username);
+        UserInfo userInfo = new UserInfo(user.getUsername(), user.getDateCreatedEpoch());
+        return userInfo;
+    }
+
+    public void changeUserPassword(String username, String oldPassword, String newPassword) throws IncorrectPasswordException {
+        User user = userDao.getUserByUsername(username);
+        checkIfPasswordIsCorrect(user, oldPassword);
+        setUserPassword(user, newPassword);
+        userDao.save(user);
+    }
+
+    private void checkIfPasswordIsCorrect(User user, String password) throws IncorrectPasswordException {
+        if (!passwordEncoder.matches(password, user.getPassword())) throw new IncorrectPasswordException();
     }
 }

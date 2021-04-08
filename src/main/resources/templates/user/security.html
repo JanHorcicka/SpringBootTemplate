@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Reset password</title>
+    <title>Security</title>
     <link href="/css/font-awesome.min.css" rel="stylesheet">
     <link href="//fonts.googleapis.com/css?family=Cabin:400,500,600,700" rel="stylesheet">
     <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
@@ -19,36 +19,38 @@
         <div class="limiter">
             <div class="container-login100">
                 <div class="wrap-login100">
-                    <form th:action="@{/setNewPassword}" method="post"
+                    <form th:action="@{/user/changePassword}" method="post"
                           class="login100-form validate-form p-l-55 p-r-55 p-t-178">
             <span class="login100-form-title">
-                Set new password
+                Change password
             </span>
+                        <div id="passwords-dont-match-error-message" class="website-message" style="display: none">Passwords didn't match. Try again.</div>
+                        <div class="website-message" th:if="${message}" th:text="${message}"></div>
+
+                        <div class="wrap-input100 validate-input m-b-16" data-validate="Old password">
+                            <input class="input100" type="password" name="oldPassword" placeholder="Old password" required>
+                            <span class="focus-input100"></span>
+                        </div>
 
                         <div class="wrap-input100 validate-input m-b-16" data-validate="New password">
-                            <input class="input100" type="password" name="newPassword" placeholder="Password">
+                            <input class="input100" type="password" name="newPassword" placeholder="New password" required>
                             <span class="focus-input100"></span>
                         </div>
 
                         <div class="wrap-input100 validate-input" data-validate="Repeat password">
-                            <input class="input100" type="password" name="repeatPassword" placeholder="Repeat password">
+                            <input class="input100" type="password" name="repeatPassword" placeholder="Repeat password" required>
                             <span class="focus-input100"></span>
-                        </div>
-
-                        <div class="d-none">
-                            <input type="text" name="token" th:value="${param.token}">
                         </div>
 
                         <div class="container-login100-form-btn my-5">
                             <button class="login100-form-btn">
-                                Set new password
+                                Change password
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
     </section>
 </div>
 

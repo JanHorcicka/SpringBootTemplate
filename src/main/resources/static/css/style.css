@@ -1447,6 +1447,10 @@ h3 {
     font-color: #ff4b5a;
 }
 
+input#logout {
+    cursor: pointer;
+}
+
 
 /*--//responsive--*/
 
