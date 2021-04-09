@@ -1,4 +1,4 @@
-package com.ipdive.logic;
+package com.ipdive.springboottemplate.logic;
 
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;

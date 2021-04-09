@@ -1,9 +1,8 @@
 package com.ipdive.springboottemplate.controller;
 
-import com.ipdive.exceptions.user.IncorrectPasswordException;
-import com.ipdive.logic.BusinessLogic;
-import com.ipdive.models.FullCompany;
-import com.ipdive.models.UserInfo;
+import com.ipdive.springboottemplate.exceptions.IncorrectPasswordException;
+import com.ipdive.springboottemplate.logic.BusinessLogic;
+import com.ipdive.springboottemplate.models.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequestMapping("/user")

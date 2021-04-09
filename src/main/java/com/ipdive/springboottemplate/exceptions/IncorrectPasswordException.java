@@ -1,4 +1,4 @@
-package com.ipdive.springboottemplate.exceptions.user;
+package com.ipdive.springboottemplate.exceptions;
 
 public class IncorrectPasswordException extends UserException {
 

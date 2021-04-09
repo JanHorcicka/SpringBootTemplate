@@ -10,7 +10,7 @@ public class ScheduledTasks {
     @Autowired
     BusinessLogic businessLogic;
 
-    @Scheduled(cron = "0 0 3 * * ?")
+    @Scheduled(cron = "0 0 3 * * ?", zone="Europe/Berlin")
     public void scheduleUpdateTask() {
         System.out.println("This is a scheduled task");
         businessLogic.deleteExpiredUsers();

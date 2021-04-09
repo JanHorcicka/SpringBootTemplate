@@ -1,6 +1,6 @@
 package com.ipdive.springboottemplate.models;
 
-import com.ipdive.logic.DateTimeZoneManager;
+import com.ipdive.springboottemplate.logic.DateTimeZoneManager;
 
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
