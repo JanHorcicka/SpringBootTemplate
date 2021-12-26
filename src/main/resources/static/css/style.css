@@ -74,7 +74,7 @@ h6 {
 p {
     margin: 0;
     padding: 0;
-    letter-spacing:0px;
+    letter-spacing:0;
     font-family: 'Cabin', sans-serif;
 }
 ul {
@@ -160,7 +160,7 @@ nav:after {
 }
 
 /* Removing padding, margin and "list-style" from the "ul",
- * and adding "position:reltive" */
+ * and adding "position:relative" */
 nav ul {
     float: right;
     padding: 0;
@@ -184,14 +184,15 @@ nav a, #logout {
     margin: 0 14px;
     font-weight: 400;
 }
-nav a:hover{color:#fff;
-    opacity:0.8;}
+
+/*nav a:hover{color:#fff;
+ opacity:0.8;}*/
 /* Background color change on Hover */
 
 /*.menu li a.active,
 nav a:hover,
 nav ul ul li a:hover {
-    color: #05b993;
+    background: #f0efed;
 }*/
 
 /* Hide Dropdowns by Default
@@ -200,14 +201,15 @@ nav ul ul {
     display: none;
     position: absolute;
     top: 23px;
-    background: #000;
-    padding: 10px;
+    background: white;
+    padding: 2px;
     -webkit-border-radius: 4px;
     -o-border-radius: 4px;
     -ms-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
     z-index: 9;
+    border: solid black 1px;
     /* has to be the same number as the "line-height" of "nav a" */
 }
 
@@ -232,14 +234,19 @@ nav ul ul li {
     -moz-transition: 0.5s all;
     -o-transition: 0.5s all;
     -ms-transition: 0.5s all;
+    color: black;
 }
 
 nav ul ul li a {
-    color: #fff;
+    color: black;
     display: block;
     font-size: 15px;
     margin: 0;
     margin: 10px;
+}
+
+nav ul li ul li a {
+    color: black;
 }
 
 /* Second, Third and more Tiers
@@ -323,7 +330,7 @@ li>a:only-child:after {
     /* Display Dropdown when clicked on Parent Lable */
     [id^=drop]:checked+ul {
         display: block;
-        padding: 15px 0;
+        /*padding: 15px 0;*/
         text-align: center;
         width: 100%;
     }

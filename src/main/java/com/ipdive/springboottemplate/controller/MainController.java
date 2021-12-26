@@ -13,8 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 @Controller
 public class MainController {
@@ -23,12 +26,23 @@ public class MainController {
     private BusinessLogic businessLogic;
 
     @RequestMapping("/")
-    public String root() {
-        return "redirect:/index";
+    public String root(@RequestParam Optional<String> ref) {
+        if (ref.isPresent()) {
+            return "redirect:/index?ref=" + ref.get();
+        }
+        else {
+            return "redirect:/index" ;
+        }
     }
 
     @RequestMapping("/index")
-    public String index(Model model) {
+    public String index(@RequestParam Optional<String> ref, Model model, HttpServletResponse response) {
+        if (ref.isPresent()) {
+            int cookieMaxAge = 1209600; // 60 * 60 * 24 * 14 = 14 days
+            Cookie cookie = new Cookie("referral", ref.get());
+            cookie.setMaxAge(cookieMaxAge);
+            response.addCookie(cookie);
+        }
         return "index";
     }
 
@@ -36,12 +50,6 @@ public class MainController {
     public String login() {
         return "login";
     }
-
-   /* @RequestMapping("/login-error")
-    public String loginError(Model model) {
-        model.addAttribute("loginError", true);
-        return "login";
-    }*/
 
     @RequestMapping("/logout")
     public String logout() {
@@ -54,15 +62,21 @@ public class MainController {
     }
 
     @PostMapping("/signup")
-    public String newUser(@ModelAttribute("signup") User user, Model model) {
+    public String newUser(@RequestParam String username,
+                          @RequestParam String newPassword,
+                          @CookieValue(value = "referral", defaultValue = "") String referral,
+                          Model model) {
         String message = "";
         try {
+            User user = new User(username, newPassword, referral);
             businessLogic.createNewUser(user);
             message = "Your account has been created. Follow the instructions we sent to your email address " +
                     "to validate your account.";
-        } catch (UserAlreadyExistsException uaee) {
+        }
+        catch (UserAlreadyExistsException uaee) {
             message = uaee.getMessage();
-        } catch (UserException ue) {
+        }
+        catch (UserException ue) {
             message = "There was a problem creating your account. Please contact us using the contact form";
         }
         model.addAttribute("message", message);

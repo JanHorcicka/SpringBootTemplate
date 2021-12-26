@@ -17,6 +17,7 @@ public class User {
     private boolean isPremium;
     private long premiumExpiryDateEpoch;
     private long dateCreatedEpoch;
+    private String referral;
 
     public User() {
 
@@ -30,6 +31,15 @@ public class User {
         this.isPremium = false;
         this.premiumExpiryDateEpoch = Instant.now().plus(30, ChronoUnit.DAYS).getEpochSecond();
         this.dateCreatedEpoch = Instant.now().getEpochSecond();
+    }
+
+    public User(String username, String password, String referral) {
+        this.username = username;
+        this.password = password;
+        this.isEnabled = false;
+        this.isPremium = false;
+        this.dateCreatedEpoch = Instant.now().getEpochSecond();
+        this.referral = referral;
     }
 
     public User(String username, String password, boolean isEnabled, String authorities, boolean isPremium, long premiumExpiryDateEpoch, long dateCreatedEpoch) {
@@ -94,6 +104,15 @@ public class User {
 
     public void setPremiumExpiryDateEpoch(long premiumExpiryDateEpoch) {
         this.premiumExpiryDateEpoch = premiumExpiryDateEpoch;
+    }
+
+    @DynamoDBAttribute
+    public String getReferral() {
+        return referral;
+    }
+
+    public void setReferral(String referral) {
+        this.referral = referral;
     }
 
     @DynamoDBAttribute
